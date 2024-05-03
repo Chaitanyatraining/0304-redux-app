@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { add } from '../../Redux/CartSlice'
 import axios from 'axios'
+import { ArrowLeft } from 'react-feather'
 
 const Product = () => {
     const [product, setProduct] = useState({})
+    const [added, setAdded] = useState(false)
+    const navigate = useNavigate()
 
     const { id } = useParams()
     const dispatch = useDispatch()
@@ -20,13 +23,16 @@ const Product = () => {
     }
 
     const handleAdd = (product) => {
-        dispatch(add(product)
-    )
+        dispatch(add(product))
+        setAdded(true)
     }
 
     return (
         <div>
+            <div className='d-flex align-items-center justify-content-center'>
+            <ArrowLeft size={20} onClick={()=>{navigate(-1)}} />
             <h2>Product</h2>
+            </div>
             <div className='container'>
                 <div>
                     {
@@ -44,7 +50,7 @@ const Product = () => {
                                     <p>{product.description}</p>
                                     <button className='btn btn-warning'
                                     onClick={() => {handleAdd(product)}}
-                                    >Add to Cart</button>
+                                    >{added ? "Added" : "Add to Cart"}</button>
                                 </div>
                             </div>
                         ) : <p>Loading</p>
