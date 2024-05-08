@@ -1,18 +1,24 @@
 import React, { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { fetchProducts } from '../../Redux/ProductSlice';
 
 const Products = () => {
-  const [products, setProducts] = useState([])
-
+  // const [products, setProducts] = useState([])
+  const dispatch = useDispatch()
+  const products = useSelector((state) => state.product.data)
+  console.log(products)
+  
   useEffect(() => {
-    getProducts();
+    // getProducts();
+    dispatch(fetchProducts())
   }, [])
 
-  const getProducts = async () => {
-    const response = await fetch('https://fakestoreapi.com/products')
-    const data = await response.json()
-    setProducts(data)
-  }
+  // const getProducts = async () => {
+  //   const response = await fetch('https://fakestoreapi.com/products')
+  //   const data = await response.json()
+  //   setProducts(data)
+  // }
 
   return (
     <div>
